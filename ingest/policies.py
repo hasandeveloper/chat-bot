@@ -77,7 +77,6 @@ def process_policy(file_name: str, s3_url: str):
     char_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=50)
     pages_split = char_splitter.split_documents(pages_clean)
 
-    breakpoint()
     # 8️⃣ Store in Chroma
     vectorstore.add_documents(pages_split)
 
