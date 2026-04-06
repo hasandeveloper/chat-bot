@@ -1,2 +1,9 @@
 poetry.lock
 chroma_db
+# macOS system files
+.DS_Store
+
+# Python cache folders
+db/__pycache__/
+ingest/__pycache__/
+services/__pycache__/

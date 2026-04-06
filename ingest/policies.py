@@ -54,7 +54,7 @@ def process_policy(file_name: str, s3_url: str):
     # 3️⃣ Check for existing hash in Chroma
     all_metadata = vectorstore._collection.get(include=["metadatas"])
     existing_hashes = [m.get("file_hash") for m in all_metadata["metadatas"] if m.get("file_hash")]
-
+    breakpoint()
     if fhash in existing_hashes:
         print(f"File '{file_name}' already ingested. Skipping.")
         return {"file_name": file_name, "status": "skipped", "reason": "duplicate content"}
@@ -74,9 +74,10 @@ def process_policy(file_name: str, s3_url: str):
         doc.page_content = " ".join(doc.page_content.split())
 
     # 7️⃣ Split text into chunks
-    char_splitter = CharacterTextSplitter(chunk_size=300, chunk_overlap=50)
+    char_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=50)
     pages_split = char_splitter.split_documents(pages_clean)
 
+    breakpoint()
     # 8️⃣ Store in Chroma
     vectorstore.add_documents(pages_split)
 
