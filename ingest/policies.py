@@ -13,7 +13,7 @@ def download_file(s3_url: str, file_name: str):
     Download PDF from S3 URL and save locally
     """
     response = requests.get(s3_url)
-
+    
     file_path = f"/tmp/{file_name}.pdf"
 
     with open(file_path, "wb") as f:
