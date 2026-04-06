@@ -1,14 +1,13 @@
 import requests
-import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters.character import CharacterTextSplitter
-from langchain_openai.embeddings import OpenAIEmbeddings
-from langchain_chroma import Chroma
-import re
+from db.vector import chroma
 import copy
 import hashlib
 
+vectorstore = chroma() 
 
+# Download file from url to local
 def download_file(s3_url: str, file_name: str):
     """
     Download PDF from S3 URL and save locally
@@ -25,6 +24,9 @@ def download_file(s3_url: str, file_name: str):
 
     return file_path
 
+# You can detect duplicate files by comparing hashes.
+# Even if two PDFs have the same name but different content, their SHA-256 hash will differ.
+# Duplicate pdfs wont be ingested even slighter change in pdf as it uses sha256
 def file_hash(file_path: str):
     """
     Compute SHA256 hash of a file
@@ -37,22 +39,11 @@ def file_hash(file_path: str):
             
     return sha256.hexdigest()
 
-
 def process_policy(file_name: str, s3_url: str):
     """
     Ingest a PDF into Chroma vector DB in an idempotent way using file hash
     """
     print(f"Processing file: {file_name}")
-
-    persist_directory = "./chroma_db"
-    embeddings_model = OpenAIEmbeddings(model="text-embedding-3-small")
-    
-    # Load or create Chroma collection
-    vectorstore = Chroma(
-        collection_name="policies",
-        persist_directory=persist_directory,
-        embedding_function=embeddings_model
-    )
 
     # 1️⃣ Download file
     file_path = download_file(s3_url, file_name)
@@ -83,7 +74,7 @@ def process_policy(file_name: str, s3_url: str):
         doc.page_content = " ".join(doc.page_content.split())
 
     # 7️⃣ Split text into chunks
-    char_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    char_splitter = CharacterTextSplitter(chunk_size=300, chunk_overlap=50)
     pages_split = char_splitter.split_documents(pages_clean)
 
     # 8️⃣ Store in Chroma
@@ -95,7 +86,6 @@ def process_policy(file_name: str, s3_url: str):
         "file_name": file_name,
         "num_pages": len(pages),
         "num_chunks": len(pages_split),
-        "persist_directory": persist_directory,
         "status": "ingested",
         "file_hash": fhash
     }
