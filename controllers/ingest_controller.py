@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from schemas.ingest_schema import IngestRequest
+from schemas.router_schema import IngestRequest
 from services.ingest_service import ingest_file
 
 router = APIRouter()

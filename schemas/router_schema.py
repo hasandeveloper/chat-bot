@@ -10,3 +10,6 @@ class IngestRequest(BaseModel):
         if not url_str.lower().endswith(".pdf"):
             raise ValueError("url must be extension of PDF file")
         return v
+        
+class ChatRequest(BaseModel):
+    q: str
