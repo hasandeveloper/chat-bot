@@ -54,7 +54,6 @@ def process_policy(file_name: str, s3_url: str):
     # 3️⃣ Check for existing hash in Chroma
     all_metadata = vectorstore._collection.get(include=["metadatas"])
     existing_hashes = [m.get("file_hash") for m in all_metadata["metadatas"] if m.get("file_hash")]
-    breakpoint()
     if fhash in existing_hashes:
         print(f"File '{file_name}' already ingested. Skipping.")
         return {"file_name": file_name, "status": "skipped", "reason": "duplicate content"}
