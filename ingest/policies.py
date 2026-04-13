@@ -4,8 +4,14 @@ from langchain_text_splitters.character import CharacterTextSplitter
 from db.vector import chroma
 import copy
 import hashlib
+import re
 
 vectorstore = chroma() 
+
+def clean_text(text: str) -> str:
+    text = re.sub(r'\n+', '\n', text)  # keep single line breaks
+    text = re.sub(r'\s+', ' ', text)   # normalize spaces
+    return text.strip()
 
 # Download file from url to local
 def download_file(s3_url: str, file_name: str):
@@ -70,7 +76,7 @@ def process_policy(file_name: str, s3_url: str):
     # 6️⃣ Clean text
     pages_clean = copy.deepcopy(pages)
     for doc in pages_clean:
-        doc.page_content = " ".join(doc.page_content.split())
+        doc.page_content = clean_text(doc.page_content)
 
     # 7️⃣ Split text into chunks
     char_splitter = CharacterTextSplitter(chunk_size=700, chunk_overlap=50)
