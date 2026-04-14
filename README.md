@@ -75,7 +75,7 @@ http://127.0.0.1:8000
 
 # 📥 7. Ingest Documents (S3 → Vector DB)
 
-Use this endpoint to ingest a document into ChromaDB:
+Use this Example endpoint to ingest a document into ChromaDB:
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/api/ingest" \
