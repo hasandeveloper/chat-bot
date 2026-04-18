@@ -82,7 +82,7 @@ curl -X POST "http://127.0.0.1:8000/api/ingest" \
   -H "Content-Type: application/json" \
   -d '{
     "file_name": "terms_conditions",
-    "s3_url": "https://stargallery-assets.s3.me-central-1.amazonaws.com/pdf-documents/en/TERMS+and+conditions.pdf"
+    "s3_url": "https://<your pdf url>.pdf"
   }'
 ```
 

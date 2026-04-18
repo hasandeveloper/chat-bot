@@ -11,7 +11,7 @@ def conversation(q: str):
     docs = vectorstore.similarity_search(q, k=3)
 
     TEMPLATE = """
-        You are a Stargallery assistant.
+        You are a Company assistant.
 
         Answer the question using ONLY the context below.
 
