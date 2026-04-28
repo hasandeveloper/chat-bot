@@ -35,7 +35,10 @@ fastapi uvicorn \
 pydantic requests python-dotenv \
 openai \
 chromadb \
+redis \
+langgraph \
 langchain \
+langchain-core \
 langchain-openai \
 langchain-community \
 langchain-chroma \

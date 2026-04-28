@@ -1,0 +1,51 @@
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import AIMessage, HumanMessage
+
+chat = ChatOpenAI(
+    model="gpt-4o-mini",
+    temperature=0,
+    max_tokens=120
+)
+
+def generate_answer(state):
+
+    summary = state.get("summary", "")
+    messages = state.get("messages") or []
+    docs = state.get("docs", "")
+
+    recent = messages[-6:]
+
+    history = "\n".join(
+        f"{'User' if isinstance(m, HumanMessage) else 'AI'}: {m.content}"
+        for m in recent
+    )
+
+    prompt = f"""
+        You are a helpful assistant.
+
+        Conversation Summary:
+        {summary}
+
+        Recent Chat:
+        {history}
+
+        Relevant Context:
+        {docs}
+
+        User Question:
+        {state["question"]}
+
+        Rules:
+        - Answer ONLY from context if possible
+        - Be concise (2-3 sentences max)
+        - Do not repeat history
+    """
+
+    response = chat.invoke(prompt)
+
+    return {
+        "messages": messages + [
+            HumanMessage(content=state["question"]),
+            AIMessage(content=response.content)
+        ]
+    }
