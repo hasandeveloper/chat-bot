@@ -1,5 +1,5 @@
 
-# 🤖 AI Chatbot Backend (LangChain + LangGraph + RAG + FastAPI)
+# 🤖 AI Chatbot Backend Service (LangChain + LangGraph + RAG + FastAPI)
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
@@ -18,7 +18,6 @@ This project is a **production-style AI chatbot backend** built using:
 * 💬 OpenAI GPT-4o for reasoning
 * ⚡ FastAPI for backend APIs
 * 🧠 Redis for memory storage
-* ☁️ S3 for document ingestion
 
 It supports:
 
@@ -190,13 +189,8 @@ curl -X POST "http://127.0.0.1:8000/api/chat" \
 
 ## 🧩 TODO (Roadmap)
 
-* [ ] Order tracking integration
-* [ ] User authentication (JWT)
-* [ ] Streaming responses
-* [ ] Multi-session chat support
 * [ ] Dockerization
 * [ ] Observability (LangSmith / tracing)
-* [ ] Rate limiting + caching
 
 ---
 
