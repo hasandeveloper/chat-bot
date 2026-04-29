@@ -7,8 +7,6 @@
 ![ChromaDB](https://img.shields.io/badge/VectorDB-Chroma-purple)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-black)
 
----
-
 ## 📌 Project Overview
 
 This project is a **production-style AI chatbot backend** built using:
@@ -26,30 +24,46 @@ It supports:
 * Context-aware responses
 * Scalable backend design
 
----
+## 🎯 Why This Project
+
+Most chatbot APIs are stateless and cannot maintain long-term context.
+
+This project solves that by combining:
+- Stateful memory (Redis)
+- Long-term summarization
+- RAG-based knowledge retrieval
+- LangGraph orchestration
+
+Making it suitable for real-world SaaS integrations.
 
 ## 🧠 Architecture
 
 ```
 User Query
    ↓
-FastAPI (/chat)
+FastAPI (/api/chat)
    ↓
-LangGraph Pipeline
+LangGraph Orchestrator
    ├── Load Memory (Redis)
    ├── Retrieve Context (ChromaDB)
    ├── Generate Answer (GPT-4o)
-   ├── Summarize Memory
+   ├── Summarize Conversation
    └── Store Memory (Redis)
    ↓
-Final Response
+Response to User
 ```
 
----
+## 🧠 How It Works
+
+1. User sends a question with `user_id`
+2. System loads conversation history from Redis
+3. Relevant documents are retrieved from ChromaDB (RAG)
+4. LangGraph orchestrates the flow:
+   - memory → retrieval → reasoning → response
+5. GPT-4o generates a final contextual answer
+6. Conversation is updated + summarized for future use
 
 ## ⚙️ Setup Instructions
-
----
 
 ## 🧩 1. Install Miniconda
 
@@ -58,16 +72,12 @@ bash ~/Downloads/Miniconda3-*.sh
 source ~/miniconda3/bin/activate
 ```
 
----
-
 ## 🐍 2. Create Environment
 
 ```bash
 conda create -n chat-bot python=3.10
 conda activate chat-bot
 ```
-
----
 
 ## 📦 3. Install Dependencies
 
@@ -88,15 +98,11 @@ langchain-community \
 langchain-chroma
 ```
 
----
-
 ## ⚠️ 4. Fix M1 / Protobuf Issue (if needed)
 
 ```bash
 pip install "protobuf<=3.20.3"
 ```
-
----
 
 ## 🚀 5. Run Server
 
@@ -110,8 +116,6 @@ uvicorn main:app --reload
 http://127.0.0.1:8000
 ```
 
----
-
 ## 📥 6. Document Ingestion (S3 → ChromaDB)
 
 ```bash
@@ -122,8 +126,6 @@ curl -X POST "http://127.0.0.1:8000/api/ingest" \
     "s3_url": "https://your-s3-url.pdf"
   }'
 ```
-
----
 
 ## 💬 7. Chat API
 
@@ -149,32 +151,24 @@ curl -X POST "http://127.0.0.1:8000/api/chat" \
   -d '{"q":"what is return policy?"}'
 ```
 
----
-
 ## 🧠 Core System Design
 
 ### 🔹 Memory System
-
-* Redis stores:
-
-  * conversation history
-  * conversation summary
+Redis stores:
+- Full conversation history
+- Running conversation summary (for long-term context)
 
 ### 🔹 RAG System
-
-* ChromaDB stores embeddings
-* Retrieves top-k relevant docs per query
+ChromaDB:
+- Stores embedded documents
+- Retrieves top-k relevant context per query
 
 ### 🔹 LLM Layer
-
-* GPT-4o generates final responses
-* Uses:
-
-  * summary (long-term memory)
-  * recent messages (short-term memory)
-  * retrieved docs (knowledge base)
-
----
+GPT-4o:
+- Uses conversation summary (long-term memory)
+- Uses recent messages (short-term memory)
+- Uses retrieved context (RAG)
+- Generates final response
 
 ## 🧠 Key Features
 
@@ -185,14 +179,12 @@ curl -X POST "http://127.0.0.1:8000/api/chat" \
 * ✅ Modular backend design
 * ✅ FastAPI production API layer
 
----
 
 ## 🧩 TODO (Roadmap)
-* [ ] Multilingual Suppoort Arabic and English
+* [ ] Config Move
+* [ ] Multilingual Support (Arabic + English)
 * [ ] Dockerization
 * [ ] Observability (LangSmith / tracing)
-
----
 
 ## ⚡ Tech Stack
 
@@ -203,8 +195,6 @@ curl -X POST "http://127.0.0.1:8000/api/chat" \
 * **Vector DB:** ChromaDB
 * **Cache / Memory:** Redis
 * **Runtime:** Python 3.10
-
----
 
 ## 📌 Summary
 
