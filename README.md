@@ -83,20 +83,7 @@ conda activate chat-bot
 ## 📦 3. Install Dependencies
 
 ```bash
-pip install --upgrade pip
-
-pip install \
-fastapi uvicorn \
-pydantic requests python-dotenv \
-openai \
-chromadb \
-redis \
-langgraph \
-langchain \
-langchain-core \
-langchain-openai \
-langchain-community \
-langchain-chroma
+pip install -r requirements.txt
 ```
 
 ## ⚠️ 4. Fix M1 / Protobuf Issue (if needed)
