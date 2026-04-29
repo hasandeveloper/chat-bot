@@ -80,16 +80,20 @@ conda create -n chat-bot python=3.10
 conda activate chat-bot
 ```
 
-## 📦 3. Install Dependencies
+## 📦 3. Clone and Install Dependencies
 
 ```bash
+git clone https://github.com/hasandeveloper/chat-bot.git
+cd chat-bot
 pip install -r requirements.txt
 ```
 
-## ⚠️ 4. Fix M1 / Protobuf Issue (if needed)
+## ⚠️ 4. Environment Variable in .env(Root directory)
 
 ```bash
-pip install "protobuf<=3.20.3"
+👉 Get your key from:
+https://platform.openai.com/account/api-keys
+OPENAI_API_KEY=your_openai_key_here
 ```
 
 ## 🚀 5. Run Server
