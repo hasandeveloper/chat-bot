@@ -1,13 +1,58 @@
-# 🤖 Chatbot Local Setup (No Poetry)
 
-This project sets up a **LangChain + Chroma + OpenAI powered chatbot backend** using FastAPI.
+# 🤖 AI Chatbot Backend (LangChain + LangGraph + RAG + FastAPI)
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
+![LangChain](https://img.shields.io/badge/LangChain-LLM%20Orchestration-orange)
+![ChromaDB](https://img.shields.io/badge/VectorDB-Chroma-purple)
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-black)
 
 ---
 
-# 🧩 1. Install Miniconda
+## 📌 Project Overview
 
-Download Miniconda:
-👉 https://www.anaconda.com/download
+This project is a **production-style AI chatbot backend** built using:
+
+* 🧠 LangGraph for conversation orchestration
+* 🔍 RAG pipeline using ChromaDB
+* 💬 OpenAI GPT-4o for reasoning
+* ⚡ FastAPI for backend APIs
+* 🧠 Redis for memory storage
+* ☁️ S3 for document ingestion
+
+It supports:
+
+* Conversational memory
+* Document-based Q&A (RAG)
+* Context-aware responses
+* Scalable backend design
+
+---
+
+## 🧠 Architecture
+
+```
+User Query
+   ↓
+FastAPI (/chat)
+   ↓
+LangGraph Pipeline
+   ├── Load Memory (Redis)
+   ├── Retrieve Context (ChromaDB)
+   ├── Generate Answer (GPT-4o)
+   ├── Summarize Memory
+   └── Store Memory (Redis)
+   ↓
+Final Response
+```
+
+---
+
+## ⚙️ Setup Instructions
+
+---
+
+## 🧩 1. Install Miniconda
 
 ```bash
 bash ~/Downloads/Miniconda3-*.sh
@@ -16,7 +61,7 @@ source ~/miniconda3/bin/activate
 
 ---
 
-# 🐍 2. Create Environment
+## 🐍 2. Create Environment
 
 ```bash
 conda create -n chat-bot python=3.10
@@ -25,7 +70,7 @@ conda activate chat-bot
 
 ---
 
-# 📦 3. Install Dependencies
+## 📦 3. Install Dependencies
 
 ```bash
 pip install --upgrade pip
@@ -47,7 +92,7 @@ jupyterlab notebook ipykernel
 
 ---
 
-# ⚠️ 4. Fix M1 / Protobuf Issue (if needed)
+## ⚠️ 4. Fix M1 / Protobuf Issue (if needed)
 
 ```bash
 pip install "protobuf<=3.20.3"
@@ -55,7 +100,7 @@ pip install "protobuf<=3.20.3"
 
 ---
 
-# 📓 5. Register Jupyter Kernel
+## 📓 5. Register Jupyter Kernel
 
 ```bash
 python -m ipykernel install --user --name=chat-bot --display-name "Python (chat-bot)"
@@ -63,115 +108,131 @@ python -m ipykernel install --user --name=chat-bot --display-name "Python (chat-
 
 ---
 
-# 🚀 6. Run FastAPI Server
+## 🚀 6. Run Server
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Server will run at:
+📍 Server:
+
 ```
 http://127.0.0.1:8000
 ```
 
 ---
 
-# 📥 7. Ingest Documents (S3 → Vector DB)
-
-Use this Example endpoint to ingest a document into ChromaDB:
+## 📥 7. Document Ingestion (S3 → ChromaDB)
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/api/ingest" \
   -H "Content-Type: application/json" \
   -d '{
     "file_name": "terms_conditions",
-    "s3_url": "https://<your pdf url>.pdf"
+    "s3_url": "https://your-s3-url.pdf"
   }'
 ```
 
 ---
 
-## 📌 Ingest API Details
+## 💬 8. Chat API
 
-- **Endpoint:** `POST /api/ingest`
-- **Purpose:** Load document from S3 → process → store embeddings in ChromaDB
+### Endpoint
 
-### Request Body:
-```json
-{
-  "file_name": "terms_conditions",
-  "s3_url": "https://your-s3-url/file.pdf"
-}
+```
+POST /api/chat
 ```
 
-### ⚠️ Requirements:
-- FastAPI server must be running
-- Endpoint `/api/ingest` must be implemented
-- S3 URL must be publicly accessible or signed
-
----
-
-# 💬 8. Chat API (Main Endpoint)
-
-Use this endpoint to talk to the chatbot:
-
-```bash
-POST http://127.0.0.1:8000/api/chat
-```
-
-### Request Body:
+### Request
 
 ```json
 {
-  "q": "what are the terms and conditions?"
+  "q": "what are the return policies?"
 }
 ```
 
----
-
-## 📌 Chat API Details
-
-- **Endpoint:** `POST /api/chat`
-- **Purpose:** Ask questions to chatbot (RAG-based response)
-
-### Example curl:
+### Example
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/api/chat" \
   -H "Content-Type: application/json" \
-  -d '{
-    "q": "what is the terms and conditions?"
-  }'
+  -d '{"q":"what is return policy?"}'
 ```
 
 ---
 
-# 📓 9. Run Jupyter (Optional)
+## 🧠 Core System Design
+
+### 🔹 Memory System
+
+* Redis stores:
+
+  * conversation history
+  * conversation summary
+
+### 🔹 RAG System
+
+* ChromaDB stores embeddings
+* Retrieves top-k relevant docs per query
+
+### 🔹 LLM Layer
+
+* GPT-4o generates final responses
+* Uses:
+
+  * summary (long-term memory)
+  * recent messages (short-term memory)
+  * retrieved docs (knowledge base)
+
+---
+
+## 🧠 Key Features
+
+* ✅ Conversational memory (short + long-term)
+* ✅ RAG-based retrieval system
+* ✅ LangGraph workflow orchestration
+* ✅ Redis-based persistence
+* ✅ Modular backend design
+* ✅ FastAPI production API layer
+
+---
+
+## 📓 Optional Tools
 
 ```bash
 jupyter notebook
-```
-
-or
-
-```bash
+# or
 jupyter lab
 ```
 
 ---
 
-# 🧠 Architecture Summary
+## 🧩 TODO (Roadmap)
 
-- FastAPI → Backend API layer
-- LangChain → Orchestration
-- ChromaDB → Vector database (RAG)
-- OpenAI → LLM reasoning
-- S3 → Document storage
+* [ ] Order tracking integration
+* [ ] User authentication (JWT)
+* [ ] Streaming responses
+* [ ] Multi-session chat support
+* [ ] Observability (LangSmith / tracing)
+* [ ] Rate limiting + caching
+
+---
+
+## ⚡ Tech Stack
+
+* **Backend:** FastAPI
+* **LLM:** OpenAI GPT-4o
+* **Orchestration:** LangGraph
+* **Framework:** LangChain
+* **Vector DB:** ChromaDB
+* **Cache / Memory:** Redis
+* **Storage:** S3
+* **Runtime:** Python 3.10
 
 ---
 
-# TODO
+## 📌 Summary
 
-- Order status integration
+This project demonstrates a **real-world production architecture for AI chatbots** combining:
 
----
+> RAG + Memory + LLM + Backend Engineering
