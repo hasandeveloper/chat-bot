@@ -55,7 +55,7 @@ Response to User
 
 ## 🧠 How It Works
 
-1. User sends a question with `user_id`
+1. User sends a question
 2. System loads conversation history from Redis
 3. Relevant documents are retrieved from ChromaDB (RAG)
 4. LangGraph orchestrates the flow:
