@@ -188,7 +188,7 @@ curl -X POST "http://127.0.0.1:8000/api/chat" \
 ---
 
 ## 🧩 TODO (Roadmap)
-
+* [ ] Multilingual Suppoort Arabic and English
 * [ ] Dockerization
 * [ ] Observability (LangSmith / tracing)
 
