@@ -7,7 +7,7 @@ def summarize(state):
 
     messages = state.get("messages") or []
 
-    if len(messages) < 2:
+    if len(messages) < 4:
         return state
 
     text = "\n".join(
