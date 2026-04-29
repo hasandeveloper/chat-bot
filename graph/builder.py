@@ -19,8 +19,8 @@ def build_graph():
     graph.add_edge(START, "load_memory")
     graph.add_edge("load_memory", "retrieve_context")
     graph.add_edge("retrieve_context", "generate_answer")
-    graph.add_edge("generate_answer", "store_memory")
-    graph.add_edge("store_memory", "summarize")
-    graph.add_edge("summarize", END)
+    graph.add_edge("generate_answer", "summarize")
+    graph.add_edge("summarize", "store_memory")
+    graph.add_edge("store_memory", END)
 
     return graph.compile()
