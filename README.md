@@ -213,6 +213,7 @@ jupyter lab
 * [ ] User authentication (JWT)
 * [ ] Streaming responses
 * [ ] Multi-session chat support
+* [ ] Dockerization
 * [ ] Observability (LangSmith / tracing)
 * [ ] Rate limiting + caching
 
