@@ -26,7 +26,7 @@ def startup_checks():
     # 🔹 Chroma check
     try:
         vectorstore.add_documents([
-            Document(page_content="Stargalery knowledge")
+            Document(page_content="Company knowledge")
         ])
 
         results = vectorstore.similarity_search("test", k=1)
