@@ -68,6 +68,7 @@ Response to User
 ## 🧩 1. Install Miniconda
 
 ```bash
+Visit:- https://www.anaconda.com/docs/getting-started/miniconda/install/mac-cli-install
 bash ~/Downloads/Miniconda3-*.sh
 source ~/miniconda3/bin/activate
 ```
