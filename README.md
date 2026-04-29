@@ -86,8 +86,7 @@ langchain \
 langchain-core \
 langchain-openai \
 langchain-community \
-langchain-chroma \
-jupyterlab notebook ipykernel
+langchain-chroma
 ```
 
 ---
@@ -100,15 +99,7 @@ pip install "protobuf<=3.20.3"
 
 ---
 
-## 📓 5. Register Jupyter Kernel
-
-```bash
-python -m ipykernel install --user --name=chat-bot --display-name "Python (chat-bot)"
-```
-
----
-
-## 🚀 6. Run Server
+## 🚀 5. Run Server
 
 ```bash
 uvicorn main:app --reload
@@ -122,7 +113,7 @@ http://127.0.0.1:8000
 
 ---
 
-## 📥 7. Document Ingestion (S3 → ChromaDB)
+## 📥 6. Document Ingestion (S3 → ChromaDB)
 
 ```bash
 curl -X POST "http://127.0.0.1:8000/api/ingest" \
@@ -135,7 +126,7 @@ curl -X POST "http://127.0.0.1:8000/api/ingest" \
 
 ---
 
-## 💬 8. Chat API
+## 💬 7. Chat API
 
 ### Endpoint
 
@@ -197,16 +188,6 @@ curl -X POST "http://127.0.0.1:8000/api/chat" \
 
 ---
 
-## 📓 Optional Tools
-
-```bash
-jupyter notebook
-# or
-jupyter lab
-```
-
----
-
 ## 🧩 TODO (Roadmap)
 
 * [ ] Order tracking integration
@@ -227,7 +208,6 @@ jupyter lab
 * **Framework:** LangChain
 * **Vector DB:** ChromaDB
 * **Cache / Memory:** Redis
-* **Storage:** S3
 * **Runtime:** Python 3.10
 
 ---
