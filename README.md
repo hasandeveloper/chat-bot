@@ -173,6 +173,7 @@ GPT-4o:
 
 
 ## 🧩 TODO (Roadmap)
+* [ ] Evaluation 
 * [ ] Config Move
 * [ ] Multilingual Support (Arabic + English)
 * [ ] Dockerization
