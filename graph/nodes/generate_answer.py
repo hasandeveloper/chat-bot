@@ -1,11 +1,8 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import AIMessage, HumanMessage
 
-chat = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0,
-    max_tokens=120
-)
+from utils.llm_adapter import get_llm
+chat = get_llm(temperature=0, max_tokens=120)
 
 def generate_answer(state):
 

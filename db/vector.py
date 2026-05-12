@@ -1,15 +1,10 @@
-from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_chroma import Chroma
-
-openai_embeddings_model = OpenAIEmbeddings(model="text-embedding-3-small")
+from utils.embedding_adapter import get_embeddings
 
 def chroma(collection_name="policies", persist_directory="./chroma_db"):
-    """
-    Load or create a Chroma collection with a global embedding model
-    """
     vectorstore = Chroma(
         collection_name=collection_name,
         persist_directory=persist_directory,
-        embedding_function=openai_embeddings_model
+        embedding_function=get_embeddings()
     )
     return vectorstore
