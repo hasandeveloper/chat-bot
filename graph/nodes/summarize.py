@@ -21,7 +21,9 @@ def summarize(state):
         - user intent
         - key questions
         - important answers
-
+        - IMPORTANT: Write the summary in the primary language the user is using.
+          If the conversation mixes Arabic and English, default to Arabic.
+          
         Conversation:
         {text}
     """)

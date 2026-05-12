@@ -18,3 +18,5 @@ langchain-community
 langchain-chroma
 
 tiktoken==0.12.0
+
+pypdf

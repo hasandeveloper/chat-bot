@@ -29,7 +29,7 @@ def generate_answer(state):
         Recent Chat:
         {history}
 
-        Relevant Context:
+        Relevant Context (Always in english):
         {docs}
 
         User Question:
@@ -39,6 +39,9 @@ def generate_answer(state):
         - Answer ONLY from context if possible
         - Be concise (2-3 sentences max)
         - Do not repeat history
+        - IMPORTANT: Detect the PRIMARY language of the User Question (the language most words are written in)
+          and respond in that SAME language. If the question mixes Arabic and English equally,
+          default to Arabic. The context may be in English — translate your answer if needed.
     """
 
     response = chat.invoke(prompt)
